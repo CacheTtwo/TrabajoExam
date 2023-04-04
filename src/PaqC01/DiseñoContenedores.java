@@ -200,7 +200,7 @@ public class DiseñoContenedores extends JFrame {
             public void caretUpdate(CaretEvent e) {
                 Mensajes.setText("Plano del hub.");
                 Hub h1 = new Hub();
-                Estad_text.setText(h1.toString());
+                Estad_text.setText(String.valueOf(h1.contenedoresPorPais("Brasil")));
             }
         });
     }
