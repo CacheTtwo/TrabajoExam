@@ -6,6 +6,8 @@ import javax.swing.event.CaretListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import PaqC01.*;
+
 public class DiseñoContenedoresP2 extends  JFrame {
     private JLabel NumID;
     private JLabel Peso;

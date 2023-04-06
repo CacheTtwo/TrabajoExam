@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import PaqC01.*;
+
 public class DiseñoContenedores extends JFrame {
     private JLabel NumId;
     private JTextField NumIdtext;
@@ -60,6 +62,12 @@ public class DiseñoContenedores extends JFrame {
         setSize(1500, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+        Hub h1 = new Hub();
+        Hub h2 = new Hub();
+        Hub h3 = new Hub();
+        Puerto p1 = new Puerto();
+        Estad_text.setText(h1.toStringHUB());
+        Estad_text.setSize(50, 50);
         NumIdtext.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {

@@ -464,7 +464,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="(Aquí se mostrará el plano del hub)"/>
+          <text value=""/>
         </properties>
       </component>
       <component id="98ee5" class="javax.swing.JLabel" binding="Logo">
