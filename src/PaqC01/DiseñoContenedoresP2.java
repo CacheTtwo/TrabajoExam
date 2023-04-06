@@ -3,11 +3,8 @@ package PaqC01;
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import PaqC01.*;
 
 public class DiseñoContenedoresP2 extends  JFrame {
     private JLabel NumID;
@@ -36,6 +33,18 @@ public class DiseñoContenedoresP2 extends  JFrame {
         setSize(800, 300);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         setVisible(true);
+
+        NumID_text.setText(DiseñoContenedores.textoID);
+        Peso_text.setText(DiseñoContenedores.textoPeso);
+        Descripcion_text.setText(DiseñoContenedores.textoDesc);
+        EmpRem_text.setText(DiseñoContenedores.textoRem);
+        EmpRec_text.setText(DiseñoContenedores.textoRec);
+        Pais_text.setText(DiseñoContenedores.botonPais);
+        a1RadioButton.setSelected(DiseñoContenedores.botonPrior1);
+        a2RadioButton.setSelected(DiseñoContenedores.botonPrior2);
+        a3RadioButton.setSelected(DiseñoContenedores.botonPrior3);
+        Inspeccionado.setSelected(DiseñoContenedores.botonAduanas);
+
         NumID_text.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {

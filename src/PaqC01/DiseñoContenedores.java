@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import PaqC01.*;
-
 public class DiseñoContenedores extends JFrame {
     private JLabel NumId;
     private JTextField NumIdtext;
@@ -43,6 +41,19 @@ public class DiseñoContenedores extends JFrame {
     private JLabel Logo;
     private JLabel Mensajes;
 
+
+    public static String textoID = "";
+    public static String textoPeso = "";
+    public static String textoDesc = "";
+    public static String textoRem = "";
+    public static String textoRec = "";
+    public static String botonPais = "";
+    public static boolean botonPrior1 = false;
+    public static boolean botonPrior2 = false;
+    public static boolean botonPrior3 = false;
+    public static boolean botonAduanas = false;
+
+
     public DiseñoContenedores() {
         setContentPane(mainPanel);
         setTitle("Welcome");
@@ -58,6 +69,7 @@ public class DiseñoContenedores extends JFrame {
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "El dato no es un entero, vuelve a teclearlo.");
                 }
+                textoID = NumIdtext.getText();
             }
         });
         Pesotext.addCaretListener(new CaretListener() {
@@ -69,6 +81,7 @@ public class DiseñoContenedores extends JFrame {
                 } catch(NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null,"El dato no es un entero, vuelve a teclearlo.");
                 }
+                textoPeso = Pesotext.getText();
             }
         });
         Desctext.addCaretListener(new CaretListener() {
@@ -76,6 +89,7 @@ public class DiseñoContenedores extends JFrame {
             public void caretUpdate(CaretEvent e) {
                 Mensajes.setText("Complete la descripción del contenido.");
                 //En este apartado no imponemos restricción
+                textoDesc = Desctext.getText();
             }
         });
         Emp_remtext.addCaretListener(new CaretListener() {
@@ -87,6 +101,7 @@ public class DiseñoContenedores extends JFrame {
                     JOptionPane.showMessageDialog(null,"El dato no es correcto (debe ser String), vuelve a teclearlo.");
                 } catch(NumberFormatException ex) {
                 }
+                textoRem = Emp_remtext.getText();
             }
         });
         Emp_rectext.addCaretListener(new CaretListener() {
@@ -98,6 +113,7 @@ public class DiseñoContenedores extends JFrame {
                     JOptionPane.showMessageDialog(null,"El dato no es correcto (debe ser String), vuelve a teclearlo.");
                 } catch(NumberFormatException ex) {
                 }
+                textoRec = Emp_rectext.getText();
             }
         });
         Ap_button.addActionListener(new ActionListener() {
@@ -169,38 +185,41 @@ public class DiseñoContenedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("País de procedencia registrado.");
+                botonPais = (String)Pais_procbox.getSelectedItem();
             }
         });
         a1RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Prioridad anotada (Marque solo una).");
+                botonPrior1 = a1RadioButton.isSelected();
             }
         });
         a2RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Prioridad anotada (Marque solo una).");
+                botonPrior2 = a2RadioButton.isSelected();
             }
         });
         a3RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Prioridad anotada (Marque solo una).");
+                botonPrior3 = a3RadioButton.isSelected();
             }
         });
         Insp_Aduanas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Inspección confirmada.");
+                botonAduanas = Insp_Aduanas.isSelected();
             }
         });
         Estad_text.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
                 Mensajes.setText("Plano del hub.");
-                Hub h1 = new Hub();
-                Estad_text.setText(String.valueOf(h1.contenedoresPorPais("Brasil")));
             }
         });
     }
