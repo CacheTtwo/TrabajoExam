@@ -66,8 +66,8 @@ public class DiseñoContenedores extends JFrame {
         Hub h2 = new Hub();
         Hub h3 = new Hub();
         Puerto p1 = new Puerto();
-        Estad_text.setText(h1.toStringHUB());
-        Estad_text.setSize(50, 50);
+        p1.setPuerto(new Hub[]{h1, h2, h3});
+        Estad_text.setText(p1.toStringHUB(0));
         NumIdtext.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
