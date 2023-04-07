@@ -62,12 +62,14 @@ public class DiseñoContenedores extends JFrame {
         setSize(1500, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+
         Hub h1 = new Hub();
         Hub h2 = new Hub();
         Hub h3 = new Hub();
         Puerto p1 = new Puerto();
         p1.setPuerto(new Hub[]{h1, h2, h3});
         Estad_text.setText(p1.toStringHUB(0));
+
         NumIdtext.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
@@ -128,12 +130,24 @@ public class DiseñoContenedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Contenedor apilado.");
+                int prioridad = 0;
+                if(a1RadioButton.isSelected()) {
+                    prioridad = 1;
+                } else if(a2RadioButton.isSelected()) {
+                    prioridad = 2;
+                } else if(a3RadioButton.isSelected()) {
+                    prioridad = 3;
+                }
+                p1.apilaContenedor(new Contenedor(Integer.parseInt(NumIdtext.getText()), Integer.parseInt(Pesotext.getText()), (String) Pais_procbox.getSelectedItem(), Insp_Aduanas.isSelected(), prioridad, Desctext.getText(), Emp_remtext.getText(), Emp_rectext.getText()));
+                Estad_text.setText(p1.toStringHUB(0));
             }
         });
         Desap_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Contenedor desapilado.");
+                p1.desapilaContenedor(0, Integer.parseInt(numCol_text.getText()));
+                Estad_text.setText(p1.toStringHUB(0));
             }
         });
         numCol_text.addCaretListener(new CaretListener() {
@@ -170,6 +184,7 @@ public class DiseñoContenedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Cantidad registrada.");
+                Cant_text.setText(String.valueOf(p1.contenedoresPorPais2((String) cuantosPais_box.getSelectedItem())));
             }
         });
         cuantosPais_box.addActionListener(new ActionListener() {
@@ -181,12 +196,7 @@ public class DiseñoContenedores extends JFrame {
         Cant_text.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                Mensajes.setText("Introduzca la cantidad");
-                try {
-                    int dato = Integer.parseInt(Cant_text.getText());
-                } catch(NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null,"El dato no es un entero, vuelve a teclearlo.");
-                }
+                Mensajes.setText("Número de contenedores procedentes del país indicado.");
             }
         });
         Pais_procbox.addActionListener(new ActionListener() {
