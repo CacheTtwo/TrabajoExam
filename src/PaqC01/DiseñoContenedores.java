@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import PaqC01.*;
-
 public class DiseñoContenedores extends JFrame {
     private JLabel NumId;
     private JTextField NumIdtext;
@@ -42,6 +40,10 @@ public class DiseñoContenedores extends JFrame {
     private JTextArea Estad_text;
     private JLabel Logo;
     private JLabel Mensajes;
+    private JLabel hubATrabajar;
+    private JRadioButton a1Hub;
+    private JRadioButton a2Hub;
+    private JRadioButton a3Hub;
 
 
     public static String textoID = "";
@@ -54,6 +56,7 @@ public class DiseñoContenedores extends JFrame {
     public static boolean botonPrior2 = false;
     public static boolean botonPrior3 = false;
     public static boolean botonAduanas = false;
+    private int hubMostrar = 0;
 
 
     public DiseñoContenedores() {
@@ -68,14 +71,15 @@ public class DiseñoContenedores extends JFrame {
         Hub h3 = new Hub();
         Puerto p1 = new Puerto();
         p1.setPuerto(new Hub[]{h1, h2, h3});
-        Estad_text.setText(p1.toStringHUB(0));
+
+        Estad_text.setText(p1.toStringHUB(hubMostrar));
 
         NumIdtext.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
                 Mensajes.setText("Introduzca el número de identificación.");
                 try {
-                    int dato =Integer.parseInt(NumIdtext.getText());
+                    int dato = Integer.parseInt(NumIdtext.getText());
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "El dato no es un entero, vuelve a teclearlo.");
                 }
@@ -139,15 +143,15 @@ public class DiseñoContenedores extends JFrame {
                     prioridad = 3;
                 }
                 p1.apilaContenedor(new Contenedor(Integer.parseInt(NumIdtext.getText()), Integer.parseInt(Pesotext.getText()), (String) Pais_procbox.getSelectedItem(), Insp_Aduanas.isSelected(), prioridad, Desctext.getText(), Emp_remtext.getText(), Emp_rectext.getText()));
-                Estad_text.setText(p1.toStringHUB(0));
+                Estad_text.setText(p1.toStringHUB(hubMostrar));
             }
         });
         Desap_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Contenedor desapilado.");
-                p1.desapilaContenedor(0, Integer.parseInt(numCol_text.getText()));
-                Estad_text.setText(p1.toStringHUB(0));
+                p1.desapilaContenedor(hubMostrar, Integer.parseInt(numCol_text.getText()));
+                Estad_text.setText(p1.toStringHUB(hubMostrar));
             }
         });
         numCol_text.addCaretListener(new CaretListener() {
@@ -190,7 +194,7 @@ public class DiseñoContenedores extends JFrame {
         cuantosPais_box.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Mensajes.setText("Ciudad.");
+                Mensajes.setText("Contenedores del país.");
             }
         });
         Cant_text.addCaretListener(new CaretListener() {
@@ -238,6 +242,27 @@ public class DiseñoContenedores extends JFrame {
             @Override
             public void caretUpdate(CaretEvent e) {
                 Mensajes.setText("Plano del hub.");
+            }
+        });
+        a1Hub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Mensajes.setText("Hub seleccionado (Marque solo uno).");
+                if(a1Hub.isSelected()) hubMostrar = 1;
+            }
+        });
+        a2Hub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Mensajes.setText("Hub seleccionado (Marque solo uno).");
+                if(a2Hub.isSelected()) hubMostrar = 2;
+            }
+        });
+        a3Hub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Mensajes.setText("Hub seleccionado (Marque solo uno).");
+                if(a3Hub.isSelected()) hubMostrar = 3;
             }
         });
     }
