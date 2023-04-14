@@ -6,8 +6,6 @@ import javax.swing.event.CaretListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import PaqC01.*;
-
 public class DiseñoContenedoresP2 extends  JFrame {
     private JLabel NumID;
     private JLabel Peso;
@@ -29,23 +27,29 @@ public class DiseñoContenedoresP2 extends  JFrame {
     private JPanel mainPanel;
     private JLabel Mensajes2;
 
-    public DiseñoContenedoresP2() {
+    public DiseñoContenedoresP2(Contenedor c) {
         setContentPane(mainPanel);
         setTitle("Welcome");
         setSize(800, 300);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         setVisible(true);
 
-        NumID_text.setText(DiseñoContenedores.textoID);
-        Peso_text.setText(DiseñoContenedores.textoPeso);
-        Descripcion_text.setText(DiseñoContenedores.textoDesc);
-        EmpRem_text.setText(DiseñoContenedores.textoRem);
-        EmpRec_text.setText(DiseñoContenedores.textoRec);
-        Pais_text.setText(DiseñoContenedores.botonPais);
-        a1RadioButton.setSelected(DiseñoContenedores.botonPrior1);
-        a2RadioButton.setSelected(DiseñoContenedores.botonPrior2);
-        a3RadioButton.setSelected(DiseñoContenedores.botonPrior3);
-        Inspeccionado.setSelected(DiseñoContenedores.botonAduanas);
+        NumID_text.setText(String.valueOf(c.getNumeroIdentf()));
+        Peso_text.setText(String.valueOf(c.getPesoCont()));
+        Descripcion_text.setText(c.getDescripcion());
+        EmpRem_text.setText(c.getNombreEmpresaEnvia());
+        EmpRec_text.setText(c.getNombreEmpresaRecibe());
+        Pais_text.setText(c.getPais());
+        if(c.getPrioridad() == 1) {
+            a1RadioButton.setSelected(true);
+        } else if(c.getPrioridad() == 2) {
+            a2RadioButton.setSelected(true);
+        } else if(c.getPrioridad() == 3) {
+            a3RadioButton.setSelected(true);
+        }
+        if(c.isAduanas()) {
+            Inspeccionado.setSelected(true);
+        }
 
         NumID_text.addCaretListener(new CaretListener() {
             @Override

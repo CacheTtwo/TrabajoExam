@@ -40,22 +40,11 @@ public class DiseñoContenedores extends JFrame {
     private JTextArea Estad_text;
     private JLabel Logo;
     private JLabel Mensajes;
-    private JLabel hubATrabajar;
+    private JLabel hub_Texto;
     private JRadioButton a1Hub;
     private JRadioButton a2Hub;
     private JRadioButton a3Hub;
 
-
-    public static String textoID = "";
-    public static String textoPeso = "";
-    public static String textoDesc = "";
-    public static String textoRem = "";
-    public static String textoRec = "";
-    public static String botonPais = "";
-    public static boolean botonPrior1 = false;
-    public static boolean botonPrior2 = false;
-    public static boolean botonPrior3 = false;
-    public static boolean botonAduanas = false;
     private int hubMostrar = 0;
 
 
@@ -83,7 +72,6 @@ public class DiseñoContenedores extends JFrame {
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "El dato no es un entero, vuelve a teclearlo.");
                 }
-                textoID = NumIdtext.getText();
             }
         });
         Pesotext.addCaretListener(new CaretListener() {
@@ -95,7 +83,6 @@ public class DiseñoContenedores extends JFrame {
                 } catch(NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null,"El dato no es un entero, vuelve a teclearlo.");
                 }
-                textoPeso = Pesotext.getText();
             }
         });
         Desctext.addCaretListener(new CaretListener() {
@@ -103,7 +90,6 @@ public class DiseñoContenedores extends JFrame {
             public void caretUpdate(CaretEvent e) {
                 Mensajes.setText("Complete la descripción del contenido.");
                 //En este apartado no imponemos restricción
-                textoDesc = Desctext.getText();
             }
         });
         Emp_remtext.addCaretListener(new CaretListener() {
@@ -115,7 +101,6 @@ public class DiseñoContenedores extends JFrame {
                     JOptionPane.showMessageDialog(null,"El dato no es correcto (debe ser String), vuelve a teclearlo.");
                 } catch(NumberFormatException ex) {
                 }
-                textoRem = Emp_remtext.getText();
             }
         });
         Emp_rectext.addCaretListener(new CaretListener() {
@@ -127,7 +112,6 @@ public class DiseñoContenedores extends JFrame {
                     JOptionPane.showMessageDialog(null,"El dato no es correcto (debe ser String), vuelve a teclearlo.");
                 } catch(NumberFormatException ex) {
                 }
-                textoRec = Emp_rectext.getText();
             }
         });
         Ap_button.addActionListener(new ActionListener() {
@@ -142,7 +126,9 @@ public class DiseñoContenedores extends JFrame {
                 } else if(a3RadioButton.isSelected()) {
                     prioridad = 3;
                 }
-                p1.apilaContenedor(new Contenedor(Integer.parseInt(NumIdtext.getText()), Integer.parseInt(Pesotext.getText()), (String) Pais_procbox.getSelectedItem(), Insp_Aduanas.isSelected(), prioridad, Desctext.getText(), Emp_remtext.getText(), Emp_rectext.getText()));
+                if(p1.apilaContenedor(hubMostrar, new Contenedor(Integer.parseInt(NumIdtext.getText()), Integer.parseInt(Pesotext.getText()), (String) Pais_procbox.getSelectedItem(), Insp_Aduanas.isSelected(), prioridad, Desctext.getText(), Emp_remtext.getText(), Emp_rectext.getText()))) {
+                    JOptionPane.showMessageDialog(null, "El contenedor se ha apilado.");
+                } else JOptionPane.showMessageDialog(null, "No hay espacio para ese contenedor en este hub.");
                 Estad_text.setText(p1.toStringHUB(hubMostrar));
             }
         });
@@ -169,7 +155,7 @@ public class DiseñoContenedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Mostrando datos del contenedor.");
-                DiseñoContenedoresP2 newframe = new DiseñoContenedoresP2();
+                DiseñoContenedoresP2 newframe = new DiseñoContenedoresP2(p1.mostrarDatos(hubMostrar, Integer.parseInt(ID_text.getText())));
                 newframe.setVisible(true);
             }
         });
@@ -188,7 +174,7 @@ public class DiseñoContenedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Cantidad registrada.");
-                Cant_text.setText(String.valueOf(p1.contenedoresPorPais2((String) cuantosPais_box.getSelectedItem())));
+                Cant_text.setText(String.valueOf(p1.contenedoresPorPais((String) cuantosPais_box.getSelectedItem())));
             }
         });
         cuantosPais_box.addActionListener(new ActionListener() {
@@ -207,35 +193,36 @@ public class DiseñoContenedores extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("País de procedencia registrado.");
-                botonPais = (String)Pais_procbox.getSelectedItem();
             }
         });
         a1RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Mensajes.setText("Prioridad anotada (Marque solo una).");
-                botonPrior1 = a1RadioButton.isSelected();
+                Mensajes.setText("Prioridad anotada.");
+                a2RadioButton.setSelected(false);
+                a3RadioButton.setSelected(false);
             }
         });
         a2RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Mensajes.setText("Prioridad anotada (Marque solo una).");
-                botonPrior2 = a2RadioButton.isSelected();
+                Mensajes.setText("Prioridad anotada.");
+                a1RadioButton.setSelected(false);
+                a3RadioButton.setSelected(false);
             }
         });
         a3RadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Mensajes.setText("Prioridad anotada (Marque solo una).");
-                botonPrior3 = a3RadioButton.isSelected();
+                Mensajes.setText("Prioridad anotada.");
+                a1RadioButton.setSelected(false);
+                a2RadioButton.setSelected(false);
             }
         });
         Insp_Aduanas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Mensajes.setText("Inspección confirmada.");
-                botonAduanas = Insp_Aduanas.isSelected();
             }
         });
         Estad_text.addCaretListener(new CaretListener() {
@@ -247,22 +234,31 @@ public class DiseñoContenedores extends JFrame {
         a1Hub.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Mensajes.setText("Hub seleccionado (Marque solo uno).");
-                if(a1Hub.isSelected()) hubMostrar = 1;
+                Mensajes.setText("Hub seleccionado.");
+                a2Hub.setSelected(false);
+                a3Hub.setSelected(false);
+                hubMostrar = 0;
+                Estad_text.setText(p1.toStringHUB(hubMostrar));
             }
         });
         a2Hub.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Mensajes.setText("Hub seleccionado (Marque solo uno).");
-                if(a2Hub.isSelected()) hubMostrar = 2;
+                Mensajes.setText("Hub seleccionado.");
+                a1Hub.setSelected(false);
+                a3Hub.setSelected(false);
+                hubMostrar = 1;
+                Estad_text.setText(p1.toStringHUB(hubMostrar));
             }
         });
         a3Hub.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Mensajes.setText("Hub seleccionado (Marque solo uno).");
-                if(a3Hub.isSelected()) hubMostrar = 3;
+                Mensajes.setText("Hub seleccionado.");
+                a1Hub.setSelected(false);
+                a2Hub.setSelected(false);
+                hubMostrar = 2;
+                Estad_text.setText(p1.toStringHUB(hubMostrar));
             }
         });
     }
