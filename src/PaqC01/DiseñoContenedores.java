@@ -6,6 +6,7 @@ import javax.swing.event.CaretListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class DiseñoContenedores extends JFrame {
     private JLabel NumId;
@@ -60,7 +61,16 @@ public class DiseñoContenedores extends JFrame {
         Hub h3 = new Hub();
         Puerto p1 = new Puerto();
         p1.setPuerto(new Hub[]{h1, h2, h3});
-
+/*
+        //Lectura de objetos
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("objetos.dat"));
+            p1 = (Puerto) in.readObject();
+            in.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+*/
         Estad_text.setText(p1.toStringHUB(hubMostrar));
 
         NumIdtext.addCaretListener(new CaretListener() {
@@ -130,6 +140,16 @@ public class DiseñoContenedores extends JFrame {
                     JOptionPane.showMessageDialog(null, "El contenedor se ha apilado.");
                 } else JOptionPane.showMessageDialog(null, "No hay espacio para ese contenedor en este hub.");
                 Estad_text.setText(p1.toStringHUB(hubMostrar));
+/*
+                //Escritura de objetos
+                try {
+                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("objetos.dat"));
+                    out.writeObject(p1);
+                    out.close();
+                } catch (IOException w) {
+                    w.printStackTrace();
+                }
+*/
             }
         });
         Desap_button.addActionListener(new ActionListener() {
