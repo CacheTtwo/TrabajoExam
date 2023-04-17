@@ -47,6 +47,7 @@ public class DiseñoContenedores extends JFrame {
     private JRadioButton a3Hub;
 
     private int hubMostrar = 0;
+    Puerto p1;
 
 
     public DiseñoContenedores() {
@@ -59,18 +60,19 @@ public class DiseñoContenedores extends JFrame {
         Hub h1 = new Hub();
         Hub h2 = new Hub();
         Hub h3 = new Hub();
-        Puerto p1 = new Puerto();
-        p1.setPuerto(new Hub[]{h1, h2, h3});
-/*
+
+        FileInputStream fis = null;
+        ObjectInputStream entrada = null;
         //Lectura de objetos
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("objetos.dat"));
-            p1 = (Puerto) in.readObject();
-            in.close();
+            fis = new FileInputStream("puerto.dat");
+            entrada = new ObjectInputStream(fis);
+            p1 = (Puerto) entrada.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            p1 = new Puerto();
+            p1.setPuerto(new Hub[]{h1, h2, h3});
         }
-*/
+
         Estad_text.setText(p1.toStringHUB(hubMostrar));
 
         NumIdtext.addCaretListener(new CaretListener() {
@@ -140,16 +142,24 @@ public class DiseñoContenedores extends JFrame {
                     JOptionPane.showMessageDialog(null, "El contenedor se ha apilado.");
                 } else JOptionPane.showMessageDialog(null, "No hay espacio para ese contenedor en este hub.");
                 Estad_text.setText(p1.toStringHUB(hubMostrar));
-/*
+
+                FileOutputStream fos = null;
+                ObjectOutputStream salida = null;
                 //Escritura de objetos
                 try {
-                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("objetos.dat"));
-                    out.writeObject(p1);
-                    out.close();
+                    fos = new FileOutputStream("puerto.dat");
+                    salida = new ObjectOutputStream(fos);
+                    salida.writeObject(p1);
                 } catch (IOException w) {
                     w.printStackTrace();
+                } finally {
+                    try {
+                        if(fos != null) fos.close();
+                        if(salida != null) salida.close();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
-*/
             }
         });
         Desap_button.addActionListener(new ActionListener() {
@@ -158,12 +168,30 @@ public class DiseñoContenedores extends JFrame {
                 Mensajes.setText("Contenedor desapilado.");
                 p1.desapilaContenedor(hubMostrar, Integer.parseInt(numCol_text.getText()));
                 Estad_text.setText(p1.toStringHUB(hubMostrar));
+
+                FileOutputStream fos = null;
+                ObjectOutputStream salida = null;
+                //Escritura de objetos
+                try {
+                    fos = new FileOutputStream("puerto.dat");
+                    salida = new ObjectOutputStream(fos);
+                    salida.writeObject(p1);
+                } catch (IOException w) {
+                    w.printStackTrace();
+                } finally {
+                    try {
+                        if(fos != null) fos.close();
+                        if(salida != null) salida.close();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         });
         numCol_text.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                Mensajes.setText("Introduzca el número de columna de la que hay que desapilar");
+                Mensajes.setText("Introduzca el número de columna (0 a 11).");
                 try {
                     int dato = Integer.parseInt(numCol_text.getText());
                 } catch(NumberFormatException ex) {
