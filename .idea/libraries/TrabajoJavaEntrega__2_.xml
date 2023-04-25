@@ -4,6 +4,9 @@
       <root url="jar://$PROJECT_DIR$/TrabajoJavaEntrega.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/TrabajoJavaEntrega.jar!/" />
+      <root url="jar://$PROJECT_DIR$/TrabajoJavaEntrega.jar!/" />
+    </SOURCES>
   </library>
 </component>

@@ -315,4 +315,9 @@ public class DiseñoContenedores extends JFrame {
         Logo = logo;
         Logo.setSize(150, 128);
     }
+
+
+
+
+
 }
